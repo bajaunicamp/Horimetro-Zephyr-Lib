@@ -16,6 +16,7 @@ LOG_MODULE_REGISTER(Horimetro);
 static struct k_timer my_timer;
 static void motor_desligado(struct k_timer *timer_id) {
   sensor_hall.motorLigado = false;
+  LOG_INF("Motor Desligado");
 };
 
 // === \Coisas to timer ===
