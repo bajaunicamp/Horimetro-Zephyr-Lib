@@ -8,6 +8,7 @@ struct {
   uint32_t rpm; // RPM calculado
   uint32_t rpmMin; // RPM mínimo que o motor chega (abaixo disso o motor está desligado)
   const struct gpio_dt_spec* dev; // Dev
+  bool motorLigado;
 } sensor_hall;
 
 // Essa função retorna quanto tempo faz desde o ultimo pulso
