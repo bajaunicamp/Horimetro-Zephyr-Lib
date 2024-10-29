@@ -6,6 +6,8 @@
 #include <zephyr/sys/time_units.h>
 #include <zephyr/timing/timing.h>
 
+struct horimetro_t horimetro;
+
 // quantos milissegundos de gordurinha adicionamos ao timer
 #define GordurinhaTIMER 100
 
@@ -45,7 +47,8 @@ static void hall_callback(const struct device *dev, struct gpio_callback *cb,
                 K_NO_WAIT);
 }
 
-int hall_init() {
+int horimetro_init() {
+  LOG_INF("Inicializando...");
   horimetro.ultimoPulso = -1; // Ciclo do último pulso
   horimetro.rpm = 0;
   horimetro.rpmMin = 1500; // E máximo por volta de 4200
@@ -55,10 +58,13 @@ int hall_init() {
       &(const struct gpio_dt_spec)GPIO_DT_SPEC_GET(DT_PATH(zephyr_user), gpios);
   horimetro.motorLigado = false;
 
+  LOG_DBG("Valores do Horímetro definidos");
+
   if (!gpio_is_ready_dt(horimetro.sensor_hall)) {
     LOG_ERR("A porta %s não está pronta\n", horimetro.sensor_hall->port->name);
     return 0;
   }
+  LOG_DBG("gpio ready");
 
   int err;
 
@@ -68,17 +74,23 @@ int hall_init() {
     return err;
   }
 
+  LOG_DBG("gpio pin configure");
+
   err =
       gpio_pin_interrupt_configure_dt(horimetro.sensor_hall, GPIO_INT_EDGE_TO_ACTIVE);
 
   if (err < 0) {
     LOG_ERR("Não foi possível configurar o pino %s %d (Erro %d)",
             horimetro.sensor_hall->port->name, horimetro.sensor_hall->pin, err);
+    return err;
   }
-  return err;
+  LOG_DBG("gpio pin interrupt configure");
 
-  gpio_init_callback(NULL, hall_callback, BIT(horimetro.sensor_hall->pin));
-  gpio_add_callback_dt(horimetro.sensor_hall, NULL);
+  static struct gpio_callback hall_cb_data;
+  gpio_init_callback(&hall_cb_data, hall_callback, BIT(horimetro.sensor_hall->pin));
+  LOG_DBG("gpio init callback");
+  gpio_add_callback_dt(horimetro.sensor_hall, &hall_cb_data);
+  LOG_DBG("gpio add callback");
 
   // Inicia o timer que verifica se o motor está ligado
   // __Esse timer não se reinicia sozinho__
@@ -86,4 +98,6 @@ int hall_init() {
   k_timer_start(&my_timer,
                 K_MSEC((60000 / horimetro.rpmMin) + GordurinhaTIMER),
                 K_NO_WAIT);
+  LOG_INF("Inicializado!");
+  return 0;
 }
