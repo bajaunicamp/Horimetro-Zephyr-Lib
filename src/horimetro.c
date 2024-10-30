@@ -53,7 +53,7 @@ int horimetro_init() {
   horimetro.rpm = 0;
   horimetro.rpmMin = 1500; // E máximo por volta de 4200
                              // Talvez possamos configurar isso aqui na
-                             // Desvice tree? 🤔
+                             // Device tree? 🤔
   horimetro.sensor_hall =
       &(const struct gpio_dt_spec)GPIO_DT_SPEC_GET(DT_PATH(zephyr_user), gpios);
   horimetro.motorLigado = false;
