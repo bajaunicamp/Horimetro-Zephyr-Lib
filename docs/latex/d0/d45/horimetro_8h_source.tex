@@ -1,0 +1,23 @@
+\doxysection{horimetro.\+h}
+\hypertarget{horimetro_8h_source}{}\label{horimetro_8h_source}\index{inc/horimetro.h@{inc/horimetro.h}}
+\mbox{\hyperlink{horimetro_8h}{Ir para a documentação desse arquivo.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ HORIMETRO\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ HORIMETRO\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <zephyr/drivers/gpio.h>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{extern}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structhorimetro__t}{horimetro\_t}}\ \{}
+\DoxyCodeLine{00007\ \ \ uint32\_t\ \mbox{\hyperlink{structhorimetro__t_a3540c540aedea02abce5831a198270f8}{ultimoPulso}};\ \textcolor{comment}{//\ Ciclo\ em\ que\ o\ último\ pulso\ foi\ enviado}}
+\DoxyCodeLine{00008\ \ \ uint32\_t\ \mbox{\hyperlink{structhorimetro__t_a91965fd0f403dcaf13a56654e0ca4960}{rpm}};\ \textcolor{comment}{//\ RPM\ calculado}}
+\DoxyCodeLine{00009\ \ \ uint32\_t\ \mbox{\hyperlink{structhorimetro__t_a7e1399eb9bc0bca14d8c1fde760d064e}{rpmMin}};\ \textcolor{comment}{//\ RPM\ mínimo\ que\ o\ motor\ chega\ (abaixo\ disso\ o\ motor\ está\ desligado)}}
+\DoxyCodeLine{00010\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structhorimetro__t_af95c0dbf7edc81ea09b463b099d1b55b}{motorLigado}};}
+\DoxyCodeLine{00011\ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{struct\ }gpio\_dt\_spec*\ \mbox{\hyperlink{structhorimetro__t_a512755a9356267021047a8d431e6617f}{sensor\_hall}};\ \textcolor{comment}{//\ Dev}}
+\DoxyCodeLine{00012\ \}\ \mbox{\hyperlink{horimetro_8h_a624d0647c295a157e56c055cfa1c869c}{horimetro}};}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ Essa\ função\ retorna\ quanto\ tempo\ faz\ desde\ o\ ultimo\ pulso}}
+\DoxyCodeLine{00015\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{horimetro_8h_a69d837a885f3be05b5dfcf9599c214d9}{horimetro\_init}}();}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
